@@ -29,9 +29,10 @@ class CollectionAgent(Agent.Movies):
       collection = os.path.basename(path)
       if Prefs['clear_collections']:
         metadata.collections.clear()
-      metadata.collections.add(collection)
+      content = [collection]
       with open(os.path.join(path, COLLECTION_FLAG)) as f:
-        content = [line.rstrip('\n') for line in f]
+        for line in f:
+          content.append(line)
       metadata.collections.add(content)
       Log('[COLLECTION] Collection set to %s for %s' % (collection, root_file))
     else:
